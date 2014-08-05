@@ -6,7 +6,14 @@ def findMatchingSquare(size=5, startingNumber=1, xPosition=2,
                        yPosition=0, direction=1):
     """
     Creates magic squares starting with 1 to find the correct magic square to
-    match the startingNumber in (xPosition, yPosition)
+    match the startingNumber in (xPosition, yPosition) in the direction
+    specified
+
+    direction key:
+        1 - up and left
+        2 - up and right
+        3 - down and left
+        4 - down and right
 
     [There's definitely a better way to do this...]
     """
