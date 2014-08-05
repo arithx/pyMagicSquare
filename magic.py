@@ -16,23 +16,7 @@ def findMatchingSquare(size=5, startingNumber=1, xPosition=2,
     for i in xrange(size):
         square.append([0 for n in xrange(size)])
 
-    if startingNumber != 1:
-        for i in xrange(size):
-            for j in xrange(size):
-                if (i, j) != (xPosition, yPosition):
-                    tmpSquare, curX, curY = deepcopy(square), i, j
-                    tmpSquare[i][j] = 1
-                    for x in xrange(2, startingNumber+1):
-                        curX, curY = nextPosition(
-                            tmpSquare, curX, curY, direction)
-                        tmpSquare[curX][curY] = x
-                    if tmpSquare[xPosition][yPosition] == startingNumber:
-                        for x in xrange(startingNumber+1, size*size+1):
-                            curX, curY = nextPosition(
-                                tmpSquare, curX, curY, direction)
-                            tmpSquare[curX][curY] = x
-                        return tmpSquare
-    else:
+    if startingNumber == 1:
         square[xPosition][yPosition] = 1
         curX, curY = xPosition, yPosition
         for x in xrange(2, size*size+1):
@@ -40,6 +24,18 @@ def findMatchingSquare(size=5, startingNumber=1, xPosition=2,
                 square, curX, curY, direction)
             square[curX][curY] = x
         return square
+
+    for i in xrange(size):
+        for j in xrange(size):
+            if (i, j) != (xPosition, yPosition):
+                tmpSquare, curX, curY = deepcopy(square), i, j
+                tmpSquare[i][j] = 1
+                for x in xrange(2, size*size+1):
+                    curX, curY = nextPosition(
+                        tmpSquare, curX, curY, direction)
+                    tmpSquare[curX][curY] = x
+                if tmpSquare[xPosition][yPosition] == startingNumber:
+                    return tmpSquare
 
 
 def nextPosition(square, x, y, direction):
@@ -84,7 +80,7 @@ def squareToString(square):
         for j in xrange(len(square)):
             retStr = "{0}{1}{2}".format(
                 retStr, "\t" if j != 0 else "", square[i][j])
-    return retStr
+    return retStr.strip()
 
 if __name__ == '__main__':
     dirStr = ["up and left", "up and right", "down and left", "down and right"]
